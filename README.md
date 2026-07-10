@@ -1,1 +1,0 @@
-# smart_study_planner
