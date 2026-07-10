@@ -1,11 +1,18 @@
-import React from "react";
+import React from 'react';
 
-const ProgressBar = ({ progress }) => {
+const ProgressBar = ({ completed, total }) => {
+  const percentage = Math.round((completed / total) * 100);
+
   return (
     <div className="progress-container">
-      <div className="progress-label">Progress: {Math.round(progress)}%</div>
+      <div className="progress-label">
+        {completed} of {total} tasks completed ({percentage}%)
+      </div>
       <div className="progress-bar">
-        <div className="progress-fill" style={{ width: `${progress}%` }}></div>
+        <div
+          className="progress-fill"
+          style={{ width: `${percentage}%` }}
+        ></div>
       </div>
     </div>
   );

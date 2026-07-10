@@ -1,4 +1,5 @@
 import React from "react";
+import './styles.css';
 
 const Reminders = ({ tasks }) => {
   // Filter tasks due within the next 3 days

@@ -1,49 +1,48 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import AddTaskForm from "./AddTaskForm";
-import ProgressBar from "./ProgressBar";
-import Reminders from "./Reminders";
+import React, { useEffect, useState } from "react";
+import { fetchTasks, addTask, deleteTask, updateTask } from "../services/taskService";
 
-const Dashboard = () => {
+function Dashboard() {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    axios.get("http://127.0.0.1:8000/api/tasks/")
-      .then((res) => setTasks(res.data))
-      .catch((err) => console.error(err));
+    async function loadTasks() {
+      const data = await fetchTasks();
+      setTasks(data);
+    }
+    loadTasks();
   }, []);
 
-  const handleTaskAdded = (newTask) => {
-    setTasks([...tasks, newTask]);
-  };
+  async function handleAddTask() {
+    const newTask = { title: "Study Algorithms", completed: false };
+    await addTask(newTask);
+    setTasks(await fetchTasks());
+  }
 
-  const completedCount = tasks.filter((t) => t.completed).length;
-  const progress = tasks.length > 0 ? (completedCount / tasks.length) * 100 : 0;
+  async function handleDeleteTask(id) {
+    await deleteTask(id);
+    setTasks(await fetchTasks());
+  }
+
+  async function handleCompleteTask(id) {
+    await updateTask(id, { completed: true });
+    setTasks(await fetchTasks());
+  }
 
   return (
-    <div className="dashboard">
-      <h1>📚 Smart Study Planner</h1>
-
-      <AddTaskForm onTaskAdded={handleTaskAdded} />
-
-      <ProgressBar progress={progress} />
-
-      <Reminders tasks={tasks} />
-
-      <div className="task-grid">
-        {tasks.map((task) => (
-          <div key={task.id} className={`task-card ${task.completed ? "done" : ""}`}>
-            <h3>{task.title}</h3>
-            <p>{task.description}</p>
-            <p className="due-date">Due: {task.due_date}</p>
-            <button className="complete-btn">
-              {task.completed ? "✅ Completed" : "Mark Complete"}
-            </button>
-          </div>
+    <div>
+      <h2>My Tasks</h2>
+      <button onClick={handleAddTask}>Add Sample Task</button>
+      <ul>
+        {tasks.map(task => (
+          <li key={task.id}>
+            {task.title} {task.completed ? "✅" : ""}
+            <button onClick={() => handleCompleteTask(task.id)}>Mark Done</button>
+            <button onClick={() => handleDeleteTask(task.id)}>❌</button>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
-};
+}
 
 export default Dashboard;
