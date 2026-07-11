@@ -32,10 +32,11 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
     "smart-study-planner-tfp8.onrender.com",
     "best-study-planner.onrender.com",
-    "localhost",
-]
+]    
 
 
 # Application definition
@@ -54,6 +55,7 @@ INSTALLED_APPS = [
     'apps.tasks',   # ✅ lives in backend/apps/tasks
     'core',         # ✅ lives in backend/core
     'rest_framework',
+    "rest_framework_simplejwt",
 ]
 
 MIDDLEWARE = [
@@ -140,3 +142,16 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+}
+
+# Use BigAutoField as the default primary key type
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

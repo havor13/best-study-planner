@@ -147,6 +147,20 @@ button:hover {
   color: #b7950b;
 }
 
+.spinner {
+  text-align: center;
+  color: #4caf50;
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+.error {
+  text-align: center;
+  color: #e74c3c;
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
 /* ===== Footer ===== */
 footer {
   text-align: center;

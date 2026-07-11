@@ -5,6 +5,7 @@ import Tasks from "./components/Tasks";
 import Calendar from "./components/Calendar";
 import Settings from "./components/Settings";
 import "./styles.css";
+import TaskManager from "./components/TaskManager";
 
 function App() {
   return (
