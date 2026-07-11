@@ -1,4 +1,10 @@
-const API_URL = "http://127.0.0.1:8000/api";
+const API_BASE_URL = "https://smart-study-planner-tfp8.onrender.com/api";
+
+export async function fetchTasks() {
+  const response = await fetch(`${API_BASE_URL}/tasks/`);
+  return response.json();
+}
+
 
 export async function fetchTasks() {
   const response = await fetch(`${API_URL}/tasks/`);

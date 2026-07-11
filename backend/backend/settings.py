@@ -28,8 +28,7 @@ SECRET_KEY = 'django-insecure-cuj3gw0@$x+4+=1!3xp(j%m-d-#z5dflpn1i90(%c=^6o5%z1e
 DEBUG = True
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
+    "https://best-study-planner.onrender.com"
 ]
 
 ALLOWED_HOSTS = [
