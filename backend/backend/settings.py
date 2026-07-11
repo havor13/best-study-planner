@@ -30,7 +30,11 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
 ]
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "smart-study-planner-tfp8.onrender.com",
+    "best-study-planner.onrender.com",
+    "localhost",
+]
 
 
 # Application definition
