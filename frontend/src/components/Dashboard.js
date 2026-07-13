@@ -1,48 +1,136 @@
 import React, { useEffect, useState } from "react";
-import { fetchTasks, addTask, deleteTask, updateTask } from "../services/taskService";
+import { useNavigate } from "react-router-dom";
+import { fetchTasks } from "../services/taskService";
+import TaskManager from "./TaskManager";
+import ProgressBar from "./ProgressBar";   // ✅ import ProgressBar
+import "../styles.css";
 
 function Dashboard() {
   const [tasks, setTasks] = useState([]);
+  const [username, setUsername] = useState("");
+  const [reminders, setReminders] = useState([]);
+  const [newReminder, setNewReminder] = useState("");
+  const [reminderDate, setReminderDate] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function loadTasks() {
-      const data = await fetchTasks();
-      setTasks(data);
+      try {
+        const data = await fetchTasks();
+        setTasks(Array.isArray(data) ? data : data.results || []);
+      } catch (err) {
+        console.error("Failed to load tasks", err);
+      }
     }
     loadTasks();
+
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
   }, []);
 
-  async function handleAddTask() {
-    const newTask = { title: "Study Algorithms", completed: false };
-    await addTask(newTask);
-    setTasks(await fetchTasks());
-  }
+  // ✅ Progress calculation
+  const completedCount = tasks.filter((t) => t.completed).length;
 
-  async function handleDeleteTask(id) {
-    await deleteTask(id);
-    setTasks(await fetchTasks());
-  }
+  // ✅ Logout handler
+  const handleLogout = () => {
+    localStorage.removeItem("access");
+    localStorage.removeItem("refresh");
+    localStorage.removeItem("username");
+    navigate("/login");
+  };
 
-  async function handleCompleteTask(id) {
-    await updateTask(id, { completed: true });
-    setTasks(await fetchTasks());
-  }
+  // ✅ Add reminder handler
+  const handleAddReminder = (e) => {
+    e.preventDefault();
+    if (!newReminder.trim()) return;
+    const reminder = {
+      id: Date.now(),
+      text: newReminder,
+      date: reminderDate,
+    };
+    setReminders((prev) => [...prev, reminder]);
+    setNewReminder("");
+    setReminderDate("");
+  };
 
   return (
-    <div>
-      <h2>My Tasks</h2>
-      <button onClick={handleAddTask}>Add Sample Task</button>
-      <ul>
-        {tasks.map(task => (
-          <li key={task.id}>
-            {task.title} {task.completed ? "✅" : ""}
-            <button onClick={() => handleCompleteTask(task.id)}>Mark Done</button>
-            <button onClick={() => handleDeleteTask(task.id)}>❌</button>
-          </li>
-        ))}
-      </ul>
+    <div className="dashboard">
+      {/* Greeting + Logout */}
+      <div className="dashboard-header">
+        <h2>Welcome, {username || "Student"} 👋</h2>
+        <button onClick={handleLogout} className="logout-btn">
+          Logout
+        </button>
+      </div>
+      <p>Here’s your Smart Study Planner overview:</p>
+
+      {/* Full TaskManager */}
+      <TaskManager />
+
+      {/* ✅ Progress Snapshot */}
+      <section className="progress-section">
+        <h3>Progress Overview</h3>
+        <ProgressBar completed={completedCount} total={tasks.length} />
+      </section>
+
+      {/* Recent Tasks Snapshot */}
+      <section className="tasks-section">
+        <h3>Recent Tasks</h3>
+        <ul className="task-list">
+          {tasks.slice(0, 3).map((task) => (
+            <li
+              key={task.id}
+              className={`task-card ${task.completed ? "task-completed" : ""}`}
+            >
+              {task.title}
+            </li>
+          ))}
+        </ul>
+        <p>
+          <a href="/tasks">Go to full TaskManager →</a>
+        </p>
+      </section>
+
+      {/* ✅ Reminders Snapshot with form */}
+      <section className="reminders-section">
+        <h3>Upcoming Reminders</h3>
+        <form onSubmit={handleAddReminder} className="reminder-form">
+          <input
+            type="text"
+            value={newReminder}
+            onChange={(e) => setNewReminder(e.target.value)}
+            placeholder="Reminder text..."
+            className="reminder-input"
+          />
+          <input
+            type="date"
+            value={reminderDate}
+            onChange={(e) => setReminderDate(e.target.value)}
+            className="reminder-date"
+          />
+          <button type="submit" className="reminder-btn">Add Reminder</button>
+        </form>
+
+        <ul className="reminder-list">
+          {reminders.map((r) => (
+            <li key={r.id} className="reminder-item">
+              {r.text} {r.date && <span className="reminder-date-display">📅 {r.date}</span>}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* Calendar Snapshot */}
+      <section className="calendar-section">
+        <h3>Calendar Highlights</h3>
+        <p>Next study session: July 15, 2026</p>
+        <p>Algorithms exam: July 20, 2026</p>
+      </section>
     </div>
   );
-}
+}   
+
 
 export default Dashboard;

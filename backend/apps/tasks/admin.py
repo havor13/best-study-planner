@@ -3,6 +3,6 @@ from apps.tasks.models import Task
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'description', 'completed', 'due_date', 'user')
+    list_display = ('id', 'title', 'description', 'completed', 'due_date')
     search_fields = ('title', 'description')
-    list_filter = ('completed', 'due_date', 'user')
+    list_filter = ('completed', 'due_date')

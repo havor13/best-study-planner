@@ -1,51 +1,37 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-function Login() {
+function Signup() {
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/login/", {
+      const response = await fetch("http://127.0.0.1:8000/api/core/auth/register/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, email, password }),
       });
 
-      let data;
-      try {
-        data = await response.json();
-      } catch {
-        throw new Error("Server did not return valid JSON");
-      }
+      const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.detail || "Login failed");
+        const message =
+          data.username?.[0] ||
+          data.email?.[0] ||
+          data.password?.[0] ||
+          data.detail ||
+          "Signup failed";
+        throw new Error(message);
       }
 
-      // ✅ Save JWT tokens consistently
-      if (data.access) {
-        localStorage.setItem("access", data.access);   // use "access"
-      }
-      if (data.refresh) {
-        localStorage.setItem("refresh", data.refresh); // use "refresh"
-      }
-
-      // ✅ Save username for greeting
-      localStorage.setItem("username", username);
-
-      setSuccess("Login successful! Redirecting to dashboard...");
-      setTimeout(() => {
-        navigate("/dashboard"); // redirect properly
-      }, 1000);
+      setSuccess("Signup successful! You can now log in.");
     } catch (err) {
       setError(err.message);
     }
@@ -53,14 +39,21 @@ function Login() {
 
   return (
     <div style={{ maxWidth: "400px", margin: "0 auto", textAlign: "center" }}>
-      <h2>Login to Smart Study Planner</h2>
-      <form onSubmit={handleLogin}>
+      <h2>Sign Up</h2>
+      <form onSubmit={handleSignup}>
         <input
           type="text"
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
+          style={{ display: "block", margin: "10px auto", padding: "8px", width: "100%" }}
+        />
+        <input
+          type="email"
+          placeholder="Email (optional)"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           style={{ display: "block", margin: "10px auto", padding: "8px", width: "100%" }}
         />
         <input
@@ -74,7 +67,7 @@ function Login() {
         <button
           type="submit"
           style={{
-            backgroundColor: "#2196F3",
+            backgroundColor: "#4CAF50",
             color: "white",
             padding: "10px 20px",
             margin: "10px",
@@ -83,7 +76,7 @@ function Login() {
             cursor: "pointer",
           }}
         >
-          Log In
+          Sign Up
         </button>
       </form>
 
@@ -93,4 +86,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Signup;

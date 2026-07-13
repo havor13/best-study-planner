@@ -113,3 +113,5 @@ INSERT INTO study_suggestions (user_id, suggested_time, reason)
 VALUES
 (1, '2026-07-09 07:00:00', 'Morning focus block for schema work'),
 (2, '2026-07-10 19:00:00', 'Evening study session for portfolio');
+
+

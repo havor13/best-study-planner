@@ -4,6 +4,7 @@ body {
   background-color: #4c7087; /* muted blue-gray background */
   color: #fdfdfd; /* bright text */
   min-height: 100vh;
+  margin: 0;
 }
 
 .App {
@@ -14,13 +15,14 @@ body {
 
 /* ===== Header ===== */
 header {
-  background-color: #2c3e50; /* dark header bar */
-  color: #ffffff; /* bright white text */
+  background-color: #2c3e50;
+  color: #ffffff;
   padding: 15px;
   text-align: center;
   font-size: 1.4rem;
   font-weight: bold;
   margin-bottom: 30px;
+  border-bottom: 3px solid #1abc9c;
 }
 
 /* ===== Sidebar ===== */
@@ -36,21 +38,21 @@ header {
 }
 
 .sidebar a {
-  color: #fdfdfd; /* bright links */
+  color: #fdfdfd;
   text-decoration: none;
   display: block;
-  padding: 8px;
-  border-radius: 4px;
+  padding: 10px;
+  border-radius: 6px;
   transition: background 0.2s ease, color 0.2s ease;
 }
 
 .sidebar a:hover {
-  background-color: #1abc9c; /* teal hover */
+  background-color: #1abc9c;
   color: #fff;
 }
 
 .sidebar a.active {
-  background-color: #3498db; /* blue highlight */
+  background-color: #3498db;
   color: #fff;
 }
 
@@ -58,78 +60,168 @@ header {
 .main {
   margin-left: 240px;
   padding: 2rem;
-  color: #fdfdfd; /* bright text */
+  color: #fdfdfd;
 }
 
 /* ===== Dashboard Container ===== */
 .dashboard {
-  background: #ffffff; /* clean white panels */
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  margin-bottom: 20px;
-  color: #2c3e50; /* dark text inside panels */
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  margin-bottom: 25px;
+  color: #2c3e50;
 }
 
-/* ===== Task List ===== */
-.task-card {
-  background: #eaf2f8;
+/* ===== Task Manager ===== */
+.task-container {
+  max-width: 650px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.task-title {
+  text-align: center;
+  margin-bottom: 1.2rem;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+/* Task Form */
+.task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.task-input,
+.task-textarea,
+.task-date {
+  padding: 0.8rem;
+  border: 1px solid #ccc;
   border-radius: 6px;
-  padding: 15px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease;
-  color: #1a1a1a;
+  font-size: 1rem;
+}
+
+.task-input:focus,
+.task-textarea:focus,
+.task-date:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+.task-button {
+  padding: 0.8rem 1.2rem;
+  background: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s ease;
+}
+
+.task-button:hover {
+  background: #2980b9;
+}
+
+/* Task List */
+.task-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.task-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: #f4f9fc;
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.8rem;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .task-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
+  background: #eaf2f8;
 }
 
-.task-card h3 {
-  margin: 0 0 10px;
-  color: #1a5276;
+.task-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
 }
 
-.task-card p {
-  margin: 0;
-  font-size: 0.9em;
-  color: #333;
+.task-text {
+  cursor: pointer;
+  font-size: 1rem;
+  color: #2c3e50;
 }
 
-/* Completed tasks */
-.task-completed {
+.task-text.completed {
   text-decoration: line-through;
   color: #888;
 }
 
-/* ===== Buttons ===== */
-button {
-  background-color: #3498db;
-  color: #fff;
+.task-date {
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  color: #2c3e50;
+}
+
+.task-date-display {
+  font-size: 0.9rem;
+  color: #b03a2e; /* deep red for urgency */
+  margin-top: 4px;
+  display: block;
+}
+
+/* Delete button */
+.delete-button {
+  background: transparent;
   border: none;
-  padding: 6px 12px;
-  border-radius: 4px;
+  color: #e74c3c;
+  font-size: 1.2rem;
   cursor: pointer;
-  margin-left: 8px;
+  transition: color 0.2s ease;
 }
 
-button:hover {
-  background-color: #2980b9;
+.delete-button:hover {
+  color: #c0392b;
 }
 
-/* ===== Progress Bar ===== */
+/*=====Progress Bar=====*/
+.progress-container {
+  margin-top: 15px;
+}
+
+.progress-label {
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
 .progress-bar {
-  height: 20px;
   background: #ddd;
   border-radius: 10px;
+  height: 20px;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background: #27ae60;
-  width: 0;
-  transition: width 0.3s ease;
+  transition: width 0.4s ease;
 }
 
 /* ===== Reminders ===== */
@@ -147,13 +239,22 @@ button:hover {
   color: #b7950b;
 }
 
+/* ===== Spinner ===== */
 .spinner {
-  text-align: center;
-  color: #4caf50;
-  font-weight: bold;
-  margin: 1rem 0;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  animation: spin 1s linear infinite;
+  margin: 1rem auto;
 }
 
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+/* ===== Error Message ===== */
 .error {
   text-align: center;
   color: #e74c3c;
@@ -165,6 +266,18 @@ button:hover {
 footer {
   text-align: center;
   margin-top: 40px;
-  font-size: 0.85em;
-  color: #fdfdfd; /* bright footer text */
+  padding: 15px;
+  background-color: #2c3e50;
+  font-size: 0.9em;
+  color: #fdfdfd;
+  border-top: 3px solid #1abc9c;
+}
+
+footer a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+footer a:hover {
+  color: #3498db;
 }

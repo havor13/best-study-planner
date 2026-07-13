@@ -1,10 +1,45 @@
-import axios from 'axios';
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
+import Dashboard from "./components/Dashboard";
+import Calendar from "./components/Calendar";
+import Settings from "./components/Settings";
+import Login from "./components/Login"; 
+import TaskManager from "./components/TaskManager";
+import Signup from "./components/Signup";
+import ProtectedRoute from "./components/ProtectedRoute";   // ✅ import
+import "./styles.css";
 
-const API = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api/', // Django API
-});
+function App() {
+  return (
+    <Router>
+      <header>Smart Study Planner</header>
+      <div className="sidebar">
+        <ul>
+          <li><Link to="/dashboard">Dashboard</Link></li>
+          <li><Link to="/tasks">Tasks</Link></li>
+          <li><Link to="/calendar">Calendar</Link></li>
+          <li><Link to="/settings">Settings</Link></li>
+          <li><Link to="/signup">Sign Up</Link></li>
+          <li><Link to="/login">Login</Link></li>
+        </ul>
+      </div>
+      <div className="main">
+        <Routes>
+          {/* Public routes */}
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login onLogin={() => window.location.href = "/dashboard"} />} />
 
-export const getTasks = () => API.get('tasks/');
-export const addTask = (task) => API.post('tasks/', task);
-export const updateTask = (id, task) => API.put(`tasks/${id}/`, task);
-export const deleteTask = (id) => API.delete(`tasks/${id}/`);
+          {/* Protected routes */}
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/tasks" element={<ProtectedRoute><TaskManager /></ProtectedRoute>} />
+          <Route path="/calendar" element={<ProtectedRoute><Calendar /></ProtectedRoute>} />
+          <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+
+          {/* Default redirect */}
+          <Route path="*" element={<Navigate to="/login" />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+}
+
+export default App;

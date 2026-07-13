@@ -25,11 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-cuj3gw0@$x+4+=1!3xp(j%m-d-#z5dflpn1i90(%c=^6o5%z1e'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-CORS_ALLOWED_ORIGINS = [
-    "https://best-study-planner.onrender.com"
-]
+DEBUG= True
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
@@ -52,8 +48,8 @@ INSTALLED_APPS = [
 
     # Your apps
     'corsheaders',
-    'apps.tasks',   # ✅ lives in backend/apps/tasks
-    'core',         # ✅ lives in backend/core
+    'apps.tasks',   
+    'apps.core',        
     'rest_framework',
     "rest_framework_simplejwt",
 ]
@@ -145,13 +141,20 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.SessionAuthentication",
-        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticated",
-    ],
+    
 }
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # React npm start
+    "https://smart-study-planner-tfp8.onrender.com",  # your live backend
+    "https://best-study-planner.onrender.com",  # live frontend
+]
 
 # Use BigAutoField as the default primary key type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+
