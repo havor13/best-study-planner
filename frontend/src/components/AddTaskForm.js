@@ -10,7 +10,7 @@ const AddTaskForm = ({ onTaskAdded }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/tasks/", {
+      const response = await axios.post("https://smart-study-planner-tfp8.onrender.com/api/api/tasks/", {
         title,
         description,
         due_date: dueDate,
