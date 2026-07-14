@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 
 """
 Django settings for backend project.
@@ -25,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-cuj3gw0@$x+4+=1!3xp(j%m-d-#z5dflpn1i90(%c=^6o5%z1e'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG= True
+DEBUG= os.environ.get("DJANGO_DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
@@ -138,12 +139,23 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
     
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",  # ✅ require login by default
+    ],
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
 }
 
 CORS_ALLOWED_ORIGINS = [
@@ -152,7 +164,6 @@ CORS_ALLOWED_ORIGINS = [
     "https://best-study-planner.onrender.com",  # live frontend
 ]
 
-# Use BigAutoField as the default primary key type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
