@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";   // ✅ Import Link here
 import { fetchTasks } from "../services/taskService";
 import TaskManager from "./TaskManager";
-import ProgressBar from "./ProgressBar";
+import ProgressBar from "./ProgressBar";   // ✅ import ProgressBar
 import "../styles.css";
 
 function Dashboard() {
@@ -63,7 +63,7 @@ function Dashboard() {
           {/* Logo is clickable and routes to home */}
           <Link to="/">
             <img
-              src="/images/logo.png"
+              src="/logo.png"
               alt="Smart Study Planner Logo"
               className="logo"
             />
@@ -81,21 +81,18 @@ function Dashboard() {
         Here’s your Smart Study Planner overview:
       </p>
 
-      {/* ===== Full TaskManager ===== */}
+      {/* Full TaskManager */}
       <TaskManager />
 
-      {/* ===== Progress Snapshot ===== */}
-      <section className="progress-section card">
-        <h3>📊 Progress Overview</h3>
+      {/* ✅ Progress Snapshot */}
+      <section className="progress-section">
+        <h3>Progress Overview</h3>
         <ProgressBar completed={completedCount} total={tasks.length} />
-        <p className="progress-text">
-          {completedCount} of {tasks.length} tasks completed
-        </p>
       </section>
 
-      {/* ===== Recent Tasks Snapshot ===== */}
-      <section className="tasks-section card">
-        <h3>📝 Recent Tasks</h3>
+      {/* Recent Tasks Snapshot */}
+      <section className="tasks-section">
+        <h3>Recent Tasks</h3>
         <ul className="task-list">
           {tasks.slice(0, 3).map((task) => (
             <li
@@ -106,14 +103,14 @@ function Dashboard() {
             </li>
           ))}
         </ul>
-        <p className="link-text">
+        <p>
           <a href="/tasks">Go to full TaskManager →</a>
         </p>
       </section>
 
-      {/* ===== Reminders Snapshot with Form ===== */}
-      <section className="reminders-section card">
-        <h3>⏰ Upcoming Reminders</h3>
+      {/* ✅ Reminders Snapshot with form */}
+      <section className="reminders-section">
+        <h3>Upcoming Reminders</h3>
         <form onSubmit={handleAddReminder} className="reminder-form">
           <input
             type="text"
@@ -128,32 +125,23 @@ function Dashboard() {
             onChange={(e) => setReminderDate(e.target.value)}
             className="reminder-date"
           />
-          <button type="submit" className="reminder-btn">
-            ➕ Add Reminder
-          </button>
+          <button type="submit" className="reminder-btn">Add Reminder</button>
         </form>
 
         <ul className="reminder-list">
           {reminders.map((r) => (
             <li key={r.id} className="reminder-item">
-              {r.text}{" "}
-              {r.date && (
-                <span className="reminder-date-display">📅 {r.date}</span>
-              )}
+              {r.text} {r.date && <span className="reminder-date-display">📅 {r.date}</span>}
             </li>
           ))}
         </ul>
       </section>
 
-      {/* ===== Calendar Snapshot ===== */}
-      <section className="calendar-section card">
-        <h3>📅 Calendar Highlights</h3>
-        <p>
-          Next study session: <strong>July 15, 2026</strong>
-        </p>
-        <p>
-          Algorithms exam: <strong>July 20, 2026</strong>
-        </p>
+      {/* Calendar Snapshot */}
+      <section className="calendar-section">
+        <h3>Calendar Highlights</h3>
+        <p>Next study session: July 15, 2026</p>
+        <p>Algorithms exam: July 20, 2026</p>
       </section>
     </div>
   );
