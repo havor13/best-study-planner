@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";   // ✅ Import Link here
 import { fetchTasks } from "../services/taskService";
 import TaskManager from "./TaskManager";
 import ProgressBar from "./ProgressBar";   // ✅ import ProgressBar
+import { connectGoogleCalendar, fetchCalendarEvents, addCalendarEvent } from "../services/calendarService";
 import "../styles.css";
 
 function Dashboard() {

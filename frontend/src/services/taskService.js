@@ -1,6 +1,6 @@
 // src/services/taskService.js
 
-const BASE_URL = "http://127.0.0.1:8000/api/tasks/";
+const BASE_URL = "https://smart-study-planner-tfp8.onrender.com/api/tasks/";
 
 // Helper: attach JWT token if available
 function getAuthHeaders() {

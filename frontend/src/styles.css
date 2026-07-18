@@ -184,7 +184,33 @@ header {
   box-shadow: 0 3px 8px rgba(0,0,0,0.2);
 }
 
+<<<<<<< HEAD
 /* Footer */
+=======
+/* ===== Error Message ===== */
+.error {
+  text-align: center;
+  color: #e74c3c;
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.logo {
+  height: 50px;
+  width: 50px;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+/* ===== Footer ===== */
+>>>>>>> 98164a13dd51e1fa256da1a91789252c644335b8
 footer {
   text-align: center;
   margin-top: 40px;
