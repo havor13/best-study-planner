@@ -13,7 +13,7 @@ function Signup() {
     setSuccess("");
 
     try {
-      const response = await fetch("https://smart-study-planner-tfp8.onrender.com/api/signup/", {
+      const response = await fetch("https://smart-study-planner-tfp8.onrender.com/api/auth/signup/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, email, password }),
