@@ -1,4 +1,4 @@
-const API_URL = "http://127.0.0.1:8000/api"; 
+const API_URL = "https://smart-study-planner-tfp8.onrender.com/api/"; 
 // or use your live API: "https://smart-study-planner-tfp8.onrender.com/api"
 
 export async function login(username, password) {
