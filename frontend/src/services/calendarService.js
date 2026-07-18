@@ -2,7 +2,7 @@
 
 const API_URL =
   process.env.NODE_ENV === "production"
-    ? "https://best-study-planner.onrender.com"
+     ? "https://smart-study-planner-tfp8.onrender.com"
     : "http://127.0.0.1:8000";
 
 // ✅ Connect Google Calendar (redirects to backend OAuth route)
