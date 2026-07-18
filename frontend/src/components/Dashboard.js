@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";   // ✅ Import Link here
 import { fetchTasks } from "../services/taskService";
 import TaskManager from "./TaskManager";
 import ProgressBar from "./ProgressBar";   // ✅ import ProgressBar
@@ -55,7 +55,7 @@ function Dashboard() {
     setReminderDate("");
   };
 
-   return (
+  return (
     <div className="dashboard">
       {/* ===== Header with Logo ===== */}
       <header className="dashboard-header">
@@ -145,7 +145,6 @@ function Dashboard() {
       </section>
     </div>
   );
-}   
-
+}
 
 export default Dashboard;
