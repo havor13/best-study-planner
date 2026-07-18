@@ -1,3 +1,22 @@
+from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Force load .env from project root
+env_path = BASE_DIR / ".env"
+print("Loading .env from:", env_path)  # debug
+load_dotenv(dotenv_path=env_path, override=True)
+
+GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
+GOOGLE_REDIRECT_URI = os.getenv("GOOGLE_REDIRECT_URI")
+
+print("GOOGLE_CLIENT_ID:", GOOGLE_CLIENT_ID)
+print("GOOGLE_REDIRECT_URI:", GOOGLE_REDIRECT_URI)
+
+
 import os
 from datetime import timedelta
 
@@ -50,7 +69,8 @@ INSTALLED_APPS = [
     # Your apps
     'corsheaders',
     'apps.tasks',   
-    'apps.core',        
+    'apps.core',  
+    'apps.googleauth',  # ✅ add this
     'rest_framework',
     "rest_framework_simplejwt",
 ]

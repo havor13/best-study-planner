@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";   // ✅ Import Link here
+import { useNavigate, Link } from "react-router-dom";
 import { fetchTasks } from "../services/taskService";
 import TaskManager from "./TaskManager";
-import ProgressBar from "./ProgressBar";   // ✅ import ProgressBar
-import { connectGoogleCalendar, fetchCalendarEvents, addCalendarEvent } from "../services/calendarService";
+import ProgressBar from "./ProgressBar";
+import {
+  connectGoogleCalendar,
+  fetchCalendarEvents,
+  addCalendarEvent,
+} from "../services/calendarService";
 import "../styles.css";
 
 function Dashboard() {
@@ -12,6 +16,7 @@ function Dashboard() {
   const [reminders, setReminders] = useState([]);
   const [newReminder, setNewReminder] = useState("");
   const [reminderDate, setReminderDate] = useState("");
+  const [calendarEvents, setCalendarEvents] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,6 +34,17 @@ function Dashboard() {
     if (storedUsername) {
       setUsername(storedUsername);
     }
+
+    // ✅ Load calendar events if already connected
+    async function loadCalendar() {
+      try {
+        const events = await fetchCalendarEvents();
+        setCalendarEvents(events || []);
+      } catch (err) {
+        console.error("Failed to load calendar events", err);
+      }
+    }
+    loadCalendar();
   }, []);
 
   // ✅ Progress calculation
@@ -56,12 +72,31 @@ function Dashboard() {
     setReminderDate("");
   };
 
+  // ✅ Connect Google Calendar
+  const handleConnectGoogle = () => {
+    connectGoogleCalendar(); // triggers backend /api/auth/google
+  };
+
+  // ✅ Add event to Google Calendar
+  const handleAddCalendarEvent = async () => {
+    try {
+      await addCalendarEvent({
+        summary: "Study Session",
+        description: "Focus on Algorithms",
+        start: "2026-07-19T10:00:00",
+        end: "2026-07-19T12:00:00",
+      });
+      alert("Event added to Google Calendar!");
+    } catch (err) {
+      console.error("Failed to add calendar event", err);
+    }
+  };
+
   return (
     <div className="dashboard">
       {/* ===== Header with Logo ===== */}
       <header className="dashboard-header">
         <div className="logo-container">
-          {/* Logo is clickable and routes to home */}
           <Link to="/">
             <img
               src="/logo.png"
@@ -82,18 +117,18 @@ function Dashboard() {
         Here’s your Smart Study Planner overview:
       </p>
 
-      {/* Full TaskManager */}
+      {/* ===== Full TaskManager ===== */}
       <TaskManager />
 
-      {/* ✅ Progress Snapshot */}
+      {/* ===== Progress Snapshot ===== */}
       <section className="progress-section">
-        <h3>Progress Overview</h3>
+        <h3>📊 Progress Overview</h3>
         <ProgressBar completed={completedCount} total={tasks.length} />
       </section>
 
-      {/* Recent Tasks Snapshot */}
+      {/* ===== Recent Tasks Snapshot ===== */}
       <section className="tasks-section">
-        <h3>Recent Tasks</h3>
+        <h3>📝 Recent Tasks</h3>
         <ul className="task-list">
           {tasks.slice(0, 3).map((task) => (
             <li
@@ -109,9 +144,9 @@ function Dashboard() {
         </p>
       </section>
 
-      {/* ✅ Reminders Snapshot with form */}
+      {/* ===== Reminders Snapshot with Form ===== */}
       <section className="reminders-section">
-        <h3>Upcoming Reminders</h3>
+        <h3>⏰ Upcoming Reminders</h3>
         <form onSubmit={handleAddReminder} className="reminder-form">
           <input
             type="text"
@@ -126,23 +161,45 @@ function Dashboard() {
             onChange={(e) => setReminderDate(e.target.value)}
             className="reminder-date"
           />
-          <button type="submit" className="reminder-btn">Add Reminder</button>
+          <button type="submit" className="reminder-btn">
+            ➕ Add Reminder
+          </button>
         </form>
 
         <ul className="reminder-list">
           {reminders.map((r) => (
             <li key={r.id} className="reminder-item">
-              {r.text} {r.date && <span className="reminder-date-display">📅 {r.date}</span>}
+              {r.text}{" "}
+              {r.date && (
+                <span className="reminder-date-display">📅 {r.date}</span>
+              )}
             </li>
           ))}
         </ul>
       </section>
 
-      {/* Calendar Snapshot */}
+      {/* ===== Calendar Snapshot ===== */}
       <section className="calendar-section">
-        <h3>Calendar Highlights</h3>
-        <p>Next study session: July 15, 2026</p>
-        <p>Algorithms exam: July 20, 2026</p>
+        <h3>📅 Calendar Highlights</h3>
+        <button onClick={handleConnectGoogle} className="calendar-btn">
+          Connect Google Calendar
+        </button>
+        <button onClick={handleAddCalendarEvent} className="calendar-btn">
+          ➕ Add Study Session
+        </button>
+
+        <ul className="calendar-list">
+          {calendarEvents.map((event) => (
+            <li key={event.id} className="calendar-item">
+              {event.summary}{" "}
+              {event.start && (
+                <span className="calendar-date-display">
+                  📅 {event.start}
+                </span>
+              )}
+            </li>
+          ))}
+        </ul>
       </section>
     </div>
   );
