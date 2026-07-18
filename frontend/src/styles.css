@@ -262,6 +262,20 @@ header {
   margin: 1rem 0;
 }
 
+logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.logo {
+  height: 50px;
+  width: 50px;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
 /* ===== Footer ===== */
 footer {
   text-align: center;
