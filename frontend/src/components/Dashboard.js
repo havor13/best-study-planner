@@ -63,7 +63,7 @@ function Dashboard() {
           {/* Logo is clickable and routes to home */}
           <Link to="/">
             <img
-              src="/images/logo.png"
+              src="/logo.png"
               alt="Smart Study Planner Logo"
               className="logo"
             />
