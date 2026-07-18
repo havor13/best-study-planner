@@ -25,8 +25,8 @@ function App() {
       <div className="main">
         <Routes>
           {/* Public routes */}
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login onLogin={() => window.location.href = "/dashboard"} />} />
+          <Route path="/auth/signup" element={<Signup />} />
+          <Route path="/auth/login" element={<Login onLogin={() => window.location.href = "/dashboard"} />} />
 
           {/* Protected routes */}
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
