@@ -55,16 +55,31 @@ function Dashboard() {
     setReminderDate("");
   };
 
-  return (
+   return (
     <div className="dashboard">
-      {/* Greeting + Logout */}
-      <div className="dashboard-header">
-        <h2>Welcome, {username || "Student"} 👋</h2>
+      {/* ===== Header with Logo ===== */}
+      <header className="dashboard-header">
+        <div className="logo-container">
+          {/* Logo is clickable and routes to home */}
+          <Link to="/">
+            <img
+              src="/images/logo.png"
+              alt="Smart Study Planner Logo"
+              className="logo"
+            />
+          </Link>
+          <h2 className="dashboard-title">
+            Welcome, {username || "Student"} 👋
+          </h2>
+        </div>
         <button onClick={handleLogout} className="logout-btn">
           Logout
         </button>
-      </div>
-      <p>Here’s your Smart Study Planner overview:</p>
+      </header>
+
+      <p className="dashboard-subtitle">
+        Here’s your Smart Study Planner overview:
+      </p>
 
       {/* Full TaskManager */}
       <TaskManager />
