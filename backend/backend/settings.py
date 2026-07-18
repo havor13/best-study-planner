@@ -159,7 +159,7 @@ SIMPLE_JWT = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # React npm start
+    "http://localhost:3001",  # React npm start
     "https://smart-study-planner-tfp8.onrender.com",  # your live backend
     "https://best-study-planner.onrender.com",  # live frontend
 ]

@@ -3,6 +3,7 @@ from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
 from apps.tasks.views import TaskViewSet, signup   # ✅ import signup view
+from apps.googleauth import views
 
 # Instantiate the router
 router = DefaultRouter()
@@ -14,4 +15,5 @@ urlpatterns = [
     path('api/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/signup/', signup, name='signup'),   # ✅ new signup route
     path('api/', include(router.urls)),           # ✅ now /api/tasks/ works
+    path("", include("apps.googleauth.urls")),
 ]
