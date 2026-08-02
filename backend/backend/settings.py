@@ -1,6 +1,8 @@
 from pathlib import Path
 import os
+import dj_database_url
 from dotenv import load_dotenv
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -113,14 +115,9 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sampsonhavor13_cse340_db',   # database name
-        'USER': 'sampsonhavor13_cse340_db',   # username
-        'PASSWORD': 'EScFzz7k1TLzjXB8EaXvfueQM8qwYtv9',  # password
-        'HOST': 'dpg-d95483lckfvc73asj900-a.oregon-postgres.render.com',  # hostname only
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get("DATABASE_URL")
+    )
 }
 
 # Password validation
