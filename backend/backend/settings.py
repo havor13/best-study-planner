@@ -1,6 +1,5 @@
 from pathlib import Path
 import os
-import dj_database_url
 from dotenv import load_dotenv
 
 
@@ -114,16 +113,17 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-import dj_database_url
-import os
-
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get("DATABASE_URL"),
-        conn_max_age=600,
-        ssl_require=True
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'havor_cse340_db',
+        'USER': 'havor13_cse340_db',
+        'PASSWORD': 'pZPrZxD68vc8cnMDlyKpUrvMSDgwGpya',
+        'HOST': '@dpg-d9mc2jnavr4c73f8a9e0-a.oregon-postgres.render.com',  # updated host
+        'PORT': '5432',
+    }
 }
+
 
 
 # Password validation
