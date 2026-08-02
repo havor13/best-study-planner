@@ -7,3 +7,4 @@ whitenoise>=6.6,<7.0
 djangorestframework-simplejwt>=5.3.0   # ✅ add this line
 google-auth-oauthlib>=1.0.0
 python-dotenv>=1.0.0
+dj-database-url>=3.1.2   # ✅ add this line
