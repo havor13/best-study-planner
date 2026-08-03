@@ -6,7 +6,9 @@ import Login from "./components/Login";
 import TaskManager from "./components/TaskManager";
 import Signup from "./components/Signup";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Footer from "./components/Footer";   // ✅ import Footer
+import Footer from "./components/Footer";   // ✅ global footer
+import Privacy from "./components/Privacy";      // ✅ privacy page
+import Terms from "./components/Terms";          // ✅ terms page
 import "./styles.css";
 
 function App() {
@@ -21,13 +23,18 @@ function App() {
           <li><Link to="/settings">Settings</Link></li>
           <li><Link to="/signup">Sign Up</Link></li>
           <li><Link to="/login">Login</Link></li>
+          <li><Link to="/privacy">Privacy Policy</Link></li>   {/* ✅ link added */}
+          <li><Link to="/terms">Terms of Service</Link></li>   {/* ✅ link added */}
         </ul>
       </div>
+
       <div className="main">
         <Routes>
           {/* Public routes */}
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login onLogin={() => window.location.href = "/dashboard"} />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
 
           {/* Protected routes */}
           <Route
